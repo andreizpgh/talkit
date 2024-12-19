@@ -1,21 +1,32 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 
-const MainPage = () => {
+const MainPage = ({ initial, exit, setExitDirection }) => {
+  const navigate = useNavigate();
+
+  const handleSettingsClick = () => {
+    setExitDirection("settings");
+    navigate("/settings");
+  };
+
+  const handleGameClick = () => {
+    setExitDirection("game");
+    navigate("/game");
+  };
+
   return (
     <motion.div
-      initial={{ x: "-100%" }}
+      className="page"
+      initial={initial}
       animate={{ x: 0 }}
-      exit={{ x: "-100%" }}
+      exit={exit}
       transition={{ type: "tween" }}
     >
-      <h1>Main Page</h1>
-      <Link to="/settings">
-        <button>Settings</button>
-      </Link>
-      <Link to="/game">
-        <button>Start</button>
-      </Link>
+      <div>
+        <h1>Main Page</h1>
+        <button onClick={handleSettingsClick}>Settings</button>
+        <button onClick={handleGameClick}>Start</button>
+      </div>
     </motion.div>
   );
 };
